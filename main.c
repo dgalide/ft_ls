@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgalide <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/09 15:50:18 by dgalide           #+#    #+#             */
-/*   Updated: 2016/09/09 15:50:20 by dgalide          ###   ########.fr       */
+/*   Created: 2016/09/09 16:13:50 by dgalide           #+#    #+#             */
+/*   Updated: 2016/09/09 16:14:58 by dgalide          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LS
-# define FT_LS
+#include "includes/ft_ls.h"
 
-#include "../libft/includes/libft.h"
-#include <dirent.h>
-
-#endif
+int			main(int argc, char **argv)
+{
+	if (argc == 1)
+		ft_putendl(argv[0]);
+	return (0);
+}
