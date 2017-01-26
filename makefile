@@ -7,7 +7,8 @@ SRC = 	sources/main.c 												\
 		sources/parse_opt.c											\
 		sources/parse_file.c										\
 		sources/readdir.c											\
-		sources/process.c																						
+		sources/process.c											\
+		sources/print_manager.c
 		
 OBJ = $(SRC:.c=.o)
 FLAG = -Wall -Werror -Wextra

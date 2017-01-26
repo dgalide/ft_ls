@@ -56,6 +56,15 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path)
 		new->path = format_path(cur_path, dir->d_name);
 		new->name = ft_strdup(dir->d_name);
 		new->is_dir = (dir->d_type == 4) ? 1 : 0;
+		new->nb_hard_link = file_stat->st_nlink;
+		(getpwuid(file_stat->st_uid)) ?
+		(new->name_usr = getpwuid(file_stat->st_uid)->pw_name) :
+		(new->name_usr = ft_strdup(ft_itoa(file_stat->st_uid, 10)));
+		(getgrgid(file_stat->st_gid)->gr_name) ?
+		(new->name_grp = getgrgid(file_stat->st_gid)->gr_name) :
+		(new->name_grp = ft_strdup(ft_itoa(file_stat->st_gid, 10)));
+		new->inode_nu = file_stat->st_ino;
+		new->right_nu = file_stat->st_mode;
 		new->next = NULL;
 		new->prev = NULL;
 		return (new);
@@ -100,7 +109,7 @@ void		find_dir(t_file **file, t_ls *data)
 		while (tmp)
 		{
 			if (tmp->is_dir && !is_current(tmp->name))
-				read_dir(tmp->name, data);
+				read_dir(tmp->path, data);
 			tmp = tmp->next;
 		}
 	}
@@ -112,12 +121,10 @@ void		read_dir(char *path, t_ls *data)
 	struct 	dirent *dir;
 	struct 	stat file_stat;
 	t_file *file;
-	t_file *tmp;
 
 	fd = 0;
 	dir = NULL;
 	file = NULL;
-	tmp = NULL;
 	if (path)
 	{
 		fd = opendir(path);
@@ -125,11 +132,12 @@ void		read_dir(char *path, t_ls *data)
 		{
 			while ((dir = readdir(fd)))
 			{
-				ft_putendl(dir->d_name);
+				//ft_putendl(dir->d_name);
 				if (lstat(format_path(path, dir->d_name), &file_stat) == 0)
 					add_file(new_file(dir, &file_stat, path), &file);
 			}
 			closedir(fd);
+			print_manager(file, data);
 			if (data->opt->br)
 				find_dir(&file, data);
 		}

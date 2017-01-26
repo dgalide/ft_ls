@@ -17,6 +17,10 @@
 # include <dirent.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/types.h>
+# include <pwd.h>
+# include <uuid/uuid.h>
+# include <grp.h>
 
 # define D_DIR (struct dirent)
 
@@ -40,6 +44,14 @@ typedef struct 			s_file
 {
 	char				*path;
 	char				*name;
+	int 				denied_acces;
+	int 				nb_hard_link;
+	char 				*name_usr;
+	char 				*name_grp;
+	int 				bool_current;
+	int 				bool_parent;
+	int					inode_nu;
+	mode_t 				right_nu;
 	int 				is_dir;
 	struct s_file		*next;
 	struct s_file		*prev;
@@ -62,5 +74,6 @@ char					*recursive_read(t_ls *data, char *name, int stop);
 int						add_arg(t_ls *data, char *name);
 int 					is_current_dir(char *name);
 void					read_dir(char *path, t_ls *data);
+void					print_manager(t_file *file, t_ls *data);
 
 #endif
