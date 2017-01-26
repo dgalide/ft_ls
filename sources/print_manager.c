@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_manager.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgalide <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/26 20:07:06 by dgalide           #+#    #+#             */
-/*   Updated: 2017/01/26 20:07:11 by dgalide          ###   ########.fr       */
+/*   Updated: 2017/01/26 23:04:56 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,23 @@ void 		print_l_mode(t_file *file, t_ls *data)
 	{
 		while (tmp)
 		{
-			tmp->right_nu = (tmp->right_nu & ~S_IFMT);
-			ft_printf("%c%c%c%c%c%c%c%c%c%c  %d %s %s %s\n", ((tmp->is_dir) ? 'd' : '-'),\
-								((tmp->right_nu & S_IRUSR) ? 'r' : '-') ,\
-								((tmp->right_nu & S_IWUSR) ? 'w' : '-'),\
-								((tmp->right_nu & S_IXUSR) ? 'x' : '-'),\
-								((tmp->right_nu & S_IRGRP) ? 'r' : '-'),\
-								((tmp->right_nu & S_IWGRP) ? 'w' : '-'),\
-								((tmp->right_nu & S_IXGRP) ? 'x' : '-'),\
-								((tmp->right_nu & S_IROTH) ? 'r' : '-'),\
-								((tmp->right_nu & S_IWOTH) ? 'w' : '-'),\
-								((tmp->right_nu & S_IXOTH) ? 'x' : '-'),\
-								tmp->nb_hard_link, tmp->name_usr, tmp->name_grp, tmp->name);
+			if (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a))
+			{
+				tmp->right_nu = (tmp->right_nu & ~S_IFMT);
+				ft_printf("%c%c%c%c%c%c%c%c%c%c  %d %s %s %s\n",\
+									((tmp->is_dir) ? 'd' : '-'),\
+									((tmp->right_nu & S_IRUSR) ? 'r' : '-') ,\
+									((tmp->right_nu & S_IWUSR) ? 'w' : '-'),\
+									((tmp->right_nu & S_IXUSR) ? 'x' : '-'),\
+									((tmp->right_nu & S_IRGRP) ? 'r' : '-'),\
+									((tmp->right_nu & S_IWGRP) ? 'w' : '-'),\
+									((tmp->right_nu & S_IXGRP) ? 'x' : '-'),\
+									((tmp->right_nu & S_IROTH) ? 'r' : '-'),\
+									((tmp->right_nu & S_IWOTH) ? 'w' : '-'),\
+									((tmp->right_nu & S_IXOTH) ? 'x' : '-'),\
+									tmp->nb_hard_link, tmp->name_usr,
+									tmp->name_grp, tmp->name);
+			}
 			tmp = tmp->next;
 		}
 	}

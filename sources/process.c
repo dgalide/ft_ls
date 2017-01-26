@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgalide <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 22:55:15 by dgalide           #+#    #+#             */
-/*   Updated: 2017/01/24 22:55:16 by dgalide          ###   ########.fr       */
+/*   Updated: 2017/01/26 23:06:37 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,22 @@ char		*format_path(char *curr_path, char *name_file)
 		return (NULL);
 }
 
+int 		is_parent_dir(char *file)
+{
+	if (file && ft_strlen(file) == 2 && file[0] == '.' && file[1] == '.')
+		return (1);
+	else
+		return (0);
+}
+
+int 		is_current_dire(char *file)
+{
+	if (file && ft_strlen(file) == 1 && file[0] == '.')
+		return (1);
+	else
+		return (0);
+}
+
 t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path)
 {
 	t_file	*new;
@@ -53,6 +69,8 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path)
 	new = (t_file *)malloc(sizeof(t_file));
 	if (cur_path && file_stat && new)
 	{
+		new->bool_parent = is_parent_dir(dir->d_name);
+		new->bool_current = is_current_dire(dir->d_name);
 		new->path = format_path(cur_path, dir->d_name);
 		new->name = ft_strdup(dir->d_name);
 		new->is_dir = (dir->d_type == 4) ? 1 : 0;
