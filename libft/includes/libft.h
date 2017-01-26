@@ -6,7 +6,7 @@
 /*   By: dgalide <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/30 19:44:34 by dgalide           #+#    #+#             */
-/*   Updated: 2016/05/31 16:15:56 by dgalide          ###   ########.fr       */
+/*   Updated: 2016/10/05 10:50:40 by dgalide          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int					ft_tolower(int c);
 int					ft_toupper(int c);
 int					ft_strequ(const char *s1, const char *s2);
 int					ft_strnequ(const char *s1, const char *s2, size_t n);
+int					ft_atoi_base(char *str, int base);
+long				ft_power(int n, int power);
 
 char				*ft_unsigned_itoa(unsigned long long n, int base);
 char				*ft_itoa(intmax_t n, int base);

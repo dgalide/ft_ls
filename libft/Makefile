@@ -6,17 +6,19 @@
 #    By: dgalide <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/30 17:42:00 by dgalide           #+#    #+#              #
-#    Updated: 2016/05/31 16:18:15 by dgalide          ###   ########.fr        #
+#    Updated: 2016/10/05 10:50:03 by dgalide          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
+SRC += ft_atoi_base.c
 SRC += get_next_line.c
 SRC += ft_atoi.c
 SRC += ft_itoa.c
 SRC += ft_bzero.c
 SRC += ft_islower.c
+SRC += ft_power.c
 SRC += ft_isupper.c
 SRC += ft_isalnum.c
 SRC += ft_isalpha.c

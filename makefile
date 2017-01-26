@@ -1,36 +1,45 @@
 NAME = ft_ls
+LIB = libft/libft.a 
 
-SRC = main.c
-
-INC = includes/ft_ls.h
-
+SRC = 	sources/main.c 												\
+		sources/init_data.c											\
+		sources/parse_arg.c											\
+		sources/parse_opt.c											\
+		sources/parse_file.c										\
+		sources/readdir.c											\
+		sources/process.c																						
+		
 OBJ = $(SRC:.c=.o)
+FLAG = -Wall -Werror -Wextra
+CG = \033[92m
+CY =  \033[93m
+CE = \033[0m
+CB = \033[34m
 
-CC = gcc
+all: $(NAME)
 
-FLAG = -Wall -Wextra -Werror
+$(NAME): $(OBJ)
+	@echo "\033[K$(CY)[ft_ls] :$(CE) $(CG)Creating Library$(CE)\033[1A";
+	-@make -C libft
+	@echo "\033[K$(CY)[ft_ls] :$(CE) $(CG)Compiling ft_ls ...$(CE)";
+	@gcc -o $(NAME) $(FLAG) $(SRC) $(LIB)
 
-LIBFT = libft/libft.a
+%.o: %.c
+	@echo "\033[K$(CY)[ft_ls] :$(CE) $(CG)Compiling $<$(CE) \033[1A";
+	@gcc $(FLAG) -c $< -o $@
 
-all: name
+clean:
+	@echo "\033[K$(CY)[ft_ls] :$(CE) $(CG)Cleaning Library ...$(CE)\033[1A";
+	-@make clean -C libft
+	@echo "\033[K$(CY)[ft_ls] :$(CE) $(CG)Cleaning ft_ls objects$(CE)\033[1A";
+	@/bin/rm -rf $(OBJ)
+
+fclean: clean
+	@echo "\033[K$(CY)[ft_ls] :$(CE) $(CG)FCleaning Library ...$(CE)\033[1A";
+	@echo "\033[K$(CY)[ft_ls] :$(CE) $(CG)Cleaning ft_ls ...$(CE)\033[1A";
+	@/bin/rm -f $(NAME)
+	@/bin/rm -f $(LIB)
 
 re: fclean all
 
-lib:
-	@make -C libft
-
-.c.o:
-	$(CC) $(FLAG) -o $(OBJ) -c $(SRC) -I $(INC)
-
-name: lib
-	$(CC) $(FLAG) -o $(NAME) $(OBJ) $(LIBFT)
-
-clean: 
-	make clean -C libft
-	rm -rf $(OBJ)
-
-fclean: clean
-	make fclean -C libft
-	rm -rf $(NAME)
-
-.PHONY: all re clean fclean
+.PHONY: all clean fclean re
