@@ -12,7 +12,7 @@
 
 #include "../includes/ft_ls.h"
 
-int				add_file(t_ls *data, char *name)
+int				add_arg(t_ls *data, char *name)
 {
 	t_arg		*new_file;
 	t_arg		*tmp;
@@ -25,10 +25,7 @@ int				add_file(t_ls *data, char *name)
 	new_file->next = NULL;
 	new_file->prev = NULL;
 	if (!data->arg)
-	{
 		data->arg = new_file;
-		data->nb_file = 1;
-	}
 	else
 	{
 		tmp = data->arg;
@@ -40,7 +37,7 @@ int				add_file(t_ls *data, char *name)
 	return (1);
 }
 
-int 				parse_file(t_ls *data, char *str)
+int 				parse_arg(t_ls *data, char *str)
 {
 	DIR				*fd;
 
@@ -48,7 +45,7 @@ int 				parse_file(t_ls *data, char *str)
 	if (str && (fd = opendir(str)))
 	{
 		closedir(fd);
-		if (!add_file(data, str))
+		if (!add_arg(data, str))
 			return (0);
 		else
 			return (1);

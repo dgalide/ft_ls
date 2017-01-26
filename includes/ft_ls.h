@@ -13,7 +13,7 @@
 #ifndef FT_LS
 # define FT_LS 
 
-# include "../libft/includes/libft.h"
+# include "../libft/includes/libft.h" 
 # include <dirent.h>
 # include <sys/stat.h>
 # include <sys/types.h>
@@ -49,17 +49,18 @@ typedef struct 			s_ls
 {
 	t_opt				*opt;
 	t_arg				*arg;
-	int					nb_file;
+	t_file 				*file;
 }						t_ls;
 
 int						main(int ac, char **av);
 int						init_data(t_ls *ls, char **av, int ac);
 int 					parse(t_ls *ls, char *arg);
 int 					parse_opt(t_ls *ls, char *str);
-int 					parse_file(t_ls *ls, char *str);
+int 					parse_arg(t_ls *ls, char *str);
 void					ls_process(t_ls *data);
 char					*recursive_read(t_ls *data, char *name, int stop);
-int						add_file(t_ls *data, char *name);
+int						add_arg(t_ls *data, char *name);
 int 					is_current_dir(char *name);
+void					read_dir(char *path, t_ls *data);
 
 #endif

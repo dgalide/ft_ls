@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_ls.h"
+#include "../includes/ft_ls.h" 
 
 t_arg		*new_dir(char *path, char *dir)
 {
@@ -64,36 +64,76 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path)
 		return (NULL);
 }
 
-void		read_dir(t_arg *arg, t_ls *data)
+void		add_file(t_file *new, t_file **begin)
+{
+	t_file	*tmp;
+
+	tmp = *begin;
+	if (tmp)
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->prev = tmp;
+	}
+	else
+		*begin = new;
+}
+
+int 		is_current(char *name)
+{
+	if (name && ft_strlen(name) >= 1 && name[ft_strlen(name) - 1] == '.')
+		return (1);
+	else if (name && ft_strlen(name) >= 2 && name[ft_strlen(name) - 1] == '.' && name[ft_strlen(name) - 2] == '.')
+		return (1);
+	else
+		return (0);
+}
+
+void		find_dir(t_file **file, t_ls *data)
+{
+	t_file	*tmp;
+
+	tmp = *file;
+	if (tmp)
+	{
+		while (tmp)
+		{
+			if (tmp->is_dir && !is_current(tmp->name))
+				read_dir(tmp->name, data);
+			tmp = tmp->next;
+		}
+	}
+}
+
+void		read_dir(char *path, t_ls *data)
 {
 	DIR 	*fd;
 	struct 	dirent *dir;
 	struct 	stat file_stat;
 	t_file *file;
+	t_file *tmp;
 
 	fd = 0;
 	dir = NULL;
 	file = NULL;
-	if (arg)
+	tmp = NULL;
+	if (path)
 	{
-		fd = opendir(arg->name_dir);
+		fd = opendir(path);
 		if (fd)
 		{
 			while ((dir = readdir(fd)))
 			{
-				ft_printf("format_path = {%s}\n", format_path(arg->name_dir, dir->d_name));
-				if (lstat(format_path(arg->name_dir, dir->d_name), &file_stat) == 0)
-				{
-					file = new_file(dir, &file_stat, arg->name_dir);
-					ft_printf("name = {%s}\ntype = {%s}\nfull_path = {%s}\n\n", file->name, ((file->is_dir) ? "Directorie" : "File") , file->path);
-				}
-			//	ft_putendl(dir->d_name);
-			//	if (!is_current_dir(dir->d_name) && data->opt->br && dir->d_type == 4)
-			//		read_dir(new_dir(arg->name_dir, dir->d_name), data);
+				ft_putendl(dir->d_name);
+				if (lstat(format_path(path, dir->d_name), &file_stat) == 0)
+					add_file(new_file(dir, &file_stat, path), &file);
 			}
+			closedir(fd);
+			if (data->opt->br)
+				find_dir(&file, data);
 		}
 	}
-	(void)data;
 }
 
 void		ls_process(t_ls *data)
@@ -103,7 +143,7 @@ void		ls_process(t_ls *data)
 	arg = data->arg;
 	while (arg)
 	{
-		read_dir(arg, data);
+		read_dir(arg->name_dir, data);
 		arg = arg->next;
 	}
 }

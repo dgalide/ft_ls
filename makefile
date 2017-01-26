@@ -3,7 +3,7 @@ LIB = libft/libft.a
 
 SRC = 	sources/main.c 												\
 		sources/init_data.c											\
-		sources/parse_arg.c											\
+		sources/parse.c												\
 		sources/parse_opt.c											\
 		sources/parse_file.c										\
 		sources/readdir.c											\
@@ -11,7 +11,7 @@ SRC = 	sources/main.c 												\
 		
 OBJ = $(SRC:.c=.o)
 FLAG = -Wall -Werror -Wextra
-CG = \033[92m
+CG = \033[92m 
 CY =  \033[93m
 CE = \033[0m
 CB = \033[34m

@@ -16,7 +16,7 @@ int 				parse(t_ls *ls, char *arg)
 {
 	if (arg && arg[0] == '-' && !parse_opt(ls, arg))
 		return (0);
-	else if (arg && arg[0] != '-' && !parse_file(ls, arg))
+	else if (arg && arg[0] != '-' && !parse_arg(ls, arg))
 		return (0);
 	else
 		return (1);
