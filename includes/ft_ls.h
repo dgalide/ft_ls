@@ -67,6 +67,7 @@ typedef struct 			s_ls
 	t_opt				*opt;
 	t_arg				*arg;
 	t_file 				*file;
+	int 				byte_blocks;
 }						t_ls;
 
 int						main(int ac, char **av);
@@ -80,5 +81,9 @@ int						add_arg(t_ls *data, char *name);
 int 					is_current_dir(char *name);
 void					read_dir(char *path, t_ls *data);
 void					print_manager(t_file *file, t_ls *data);
+int 					is_sort_date(t_file *file);
+int 					is_sort_alpha(t_file *file);
+void 					sort_alpha(t_file **file);
+void 					sort_date(t_file *file);
 
 #endif

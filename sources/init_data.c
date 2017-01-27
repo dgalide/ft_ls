@@ -35,6 +35,7 @@ int			init_data(t_ls *data, char **av, int ac)
 	data->arg = NULL;
 	data->opt = init_opt();
 	data->file = NULL;
+	data->byte_blocks = 0;
 	while (++i < ac)
 		if (!parse(data, av[i]))
 			return (0);

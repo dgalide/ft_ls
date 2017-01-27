@@ -62,13 +62,14 @@ int 		is_current_dire(char *file)
 		return (0);
 }
 
-t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path)
+t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_ls *data)
 {
 	t_file	*new;
 
 	new = (t_file *)malloc(sizeof(t_file));
 	if (cur_path && file_stat && new)
 	{
+		data->byte_blocks += file_stat->st_blocks;
 		new->bool_parent = is_parent_dir(dir->d_name);
 		new->bool_current = is_current_dire(dir->d_name);
 		new->path = format_path(cur_path, dir->d_name);
@@ -155,7 +156,7 @@ void		read_dir(char *path, t_ls *data)
 			{
 				//ft_putendl(dir->d_name);
 				if (lstat(format_path(path, dir->d_name), &file_stat) == 0)
-					add_file(new_file(dir, &file_stat, path), &file);
+					add_file(new_file(dir, &file_stat, path, data), &file);
 			}
 			closedir(fd);
 			print_manager(file, data);

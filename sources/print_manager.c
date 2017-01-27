@@ -35,9 +35,9 @@ void 		print_l_mode(t_file *file, t_ls *data)
 	t_file	*tmp;
 
 	tmp = file;
-	ft_putendl("-- PRINT_L --");
 	if (tmp && data)
 	{
+		ft_printf("total %d\n", data->byte_blocks);
 		while (tmp)
 		{
 			if (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a))
@@ -66,6 +66,11 @@ void 		print_l_mode(t_file *file, t_ls *data)
 
 void		print_manager(t_file *file, t_ls *data)
 {
-	if (data->opt->l)
+
+	(data->opt->sr) ? sort_alpha(&file) : 0;
+	(data->opt->t) ? sort_date(file) : 0;
+	if (!is_sort_alpha(file))
+		ft_putendl("\nNOT SORT ALPHA");
+	if (data->opt->l)	
 		print_l_mode(file, data);
 }

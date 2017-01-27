@@ -8,10 +8,11 @@ SRC = 	sources/main.c 												\
 		sources/parse_file.c										\
 		sources/readdir.c											\
 		sources/process.c											\
-		sources/print_manager.c
+		sources/print_manager.c 									\
+		sources/sort.c
 		
 OBJ = $(SRC:.c=.o)
-FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra -g -fsanitize=address
 CG = \033[92m 
 CY =  \033[93m
 CE = \033[0m
