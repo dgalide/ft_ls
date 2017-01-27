@@ -6,11 +6,29 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/26 20:07:06 by dgalide           #+#    #+#             */
-/*   Updated: 2017/01/26 23:04:56 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/01/27 00:37:33 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+char		*time_handler(t_file *file, t_opt *opt)
+{
+	char *tmp;
+	char *tmp2;
+
+	if (opt->bt)
+		tmp = ft_strsub(file->mtime, 4, 20);
+	else if (time(0) - file->time <= 15724800)
+		tmp = ft_strsub(file->mtime, 4, 12);
+	else
+	{
+		tmp = ft_strsub(file->mtime, 4, 7);
+		tmp2 = ft_strsub(file->mtime, 19, 5);
+		tmp = ft_strjoin_free(&tmp, &tmp2, 1, 1);
+	}
+	return (tmp);
+}
 
 void 		print_l_mode(t_file *file, t_ls *data)
 {
@@ -25,7 +43,7 @@ void 		print_l_mode(t_file *file, t_ls *data)
 			if (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a))
 			{
 				tmp->right_nu = (tmp->right_nu & ~S_IFMT);
-				ft_printf("%c%c%c%c%c%c%c%c%c%c  %d %s %s %s\n",\
+				ft_printf("%c%c%c%c%c%c%c%c%c%c  %d %s %s %d %s %s\n",\
 									((tmp->is_dir) ? 'd' : '-'),\
 									((tmp->right_nu & S_IRUSR) ? 'r' : '-') ,\
 									((tmp->right_nu & S_IWUSR) ? 'w' : '-'),\
@@ -37,7 +55,9 @@ void 		print_l_mode(t_file *file, t_ls *data)
 									((tmp->right_nu & S_IWOTH) ? 'w' : '-'),\
 									((tmp->right_nu & S_IXOTH) ? 'x' : '-'),\
 									tmp->nb_hard_link, tmp->name_usr,
-									tmp->name_grp, tmp->name);
+									tmp->name_grp, tmp->st_size, 
+									time_handler(tmp, data->opt),
+									tmp->name);
 			}
 			tmp = tmp->next;
 		}

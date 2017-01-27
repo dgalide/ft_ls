@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 22:55:15 by dgalide           #+#    #+#             */
-/*   Updated: 2017/01/26 23:06:37 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/01/27 00:28:43 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path)
 		new->bool_parent = is_parent_dir(dir->d_name);
 		new->bool_current = is_current_dire(dir->d_name);
 		new->path = format_path(cur_path, dir->d_name);
+		new->st_size = (int)file_stat->st_size;
+		new->mtime = ft_strdup(ctime(&(file_stat->st_mtime)));
+		new->time = file_stat->st_mtime;
 		new->name = ft_strdup(dir->d_name);
 		new->is_dir = (dir->d_type == 4) ? 1 : 0;
 		new->nb_hard_link = file_stat->st_nlink;

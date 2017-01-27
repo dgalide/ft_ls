@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgalide <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 16:30:17 by dgalide           #+#    #+#             */
-/*   Updated: 2017/01/24 16:30:18 by dgalide          ###   ########.fr       */
+/*   Updated: 2017/01/27 00:31:25 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <pwd.h>
 # include <uuid/uuid.h>
 # include <grp.h>
+# include <time.h>
 
 # define D_DIR (struct dirent)
 
@@ -31,6 +32,7 @@ typedef struct  		s_opt
 		int				br;
 		int				a;
 		int				t;
+		int 			bt;
 }						t_opt;
 
 typedef struct 			s_arg
@@ -53,6 +55,9 @@ typedef struct 			s_file
 	int					inode_nu;
 	mode_t 				right_nu;
 	int 				is_dir;
+	int     			st_size;
+	char 	   			*mtime;
+	long 				time;
 	struct s_file		*next;
 	struct s_file		*prev;
 }						t_file;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_opt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgalide <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:49:33 by dgalide           #+#    #+#             */
-/*   Updated: 2017/01/24 17:49:34 by dgalide          ###   ########.fr       */
+/*   Updated: 2017/01/27 00:38:22 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ static void			add_opt(t_ls *ls, char c)
 		ls->opt->a = 1;
 	else if (c == 't')
 		ls->opt->t = 1;
+	else if (c == 'T')
+		ls->opt->bt = 1;
 }
 
 static int 			is_valid_opt(char c)
 {
-	if (c == 'l' || c == 'R' || c == 'r' || c == 'a' || c == 't')
+	if (c == 'l' || c == 'R' || c == 'r' || c == 'a' || c == 't' || c == 'T')
 		return (1);
 	else
 		return (0);

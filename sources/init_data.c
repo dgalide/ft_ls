@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgalide <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 16:50:21 by dgalide           #+#    #+#             */
-/*   Updated: 2017/01/24 16:50:23 by dgalide          ###   ########.fr       */
+/*   Updated: 2017/01/27 00:39:01 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static t_opt	*init_opt(void)
 	opt->sr = 0;
 	opt->a = 0;
 	opt->t = 0;
+	opt->bt = 0;
 	return (opt);
 }
 
