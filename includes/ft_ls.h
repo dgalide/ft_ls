@@ -83,7 +83,7 @@ void					read_dir(char *path, t_ls *data);
 void					print_manager(t_file *file, t_ls *data);
 int 					is_sort_date(t_file *file);
 int 					is_sort_alpha(t_file *file);
-void 					sort_alpha(t_file **file);
+void 					sort_alpha(t_file *file);
 void 					sort_date(t_file *file);
 
 #endif

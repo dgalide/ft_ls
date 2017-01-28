@@ -23,11 +23,12 @@ int 				is_sort_alpha(t_file *file)
 	{
 		while (tmp->next)
 		{
-			if (ft_strcmp(tmp->next->name, tmp->name) > 0)
+			if (ft_strcmp(tmp->name, tmp->next->name) < 0)
 				bool_alpha = 0;
 			tmp = tmp->next;
 		}
 	}
+//	ft_printf("is_sort_alpha{%d}\n", bool_alpha);
 	return ((bool_alpha) ? 1 : 0);
 }
 
@@ -50,9 +51,10 @@ int 				is_sort_date(t_file *file)
 	return ((bool_time) ? 1 : 0);
 }
 
-void				swap_file(t_file *a, t_file *b, t_file *begin)
+void				swap_file(t_file *a, t_file *b)
 {
-	t_file 			*tmp;
+
+	/*t_file 			*tmp;
 	t_file			*tmp1;
 	t_file			*tmp2;
 
@@ -61,28 +63,44 @@ void				swap_file(t_file *a, t_file *b, t_file *begin)
 	tmp2 = NULL;
 	if (a && b)
 	{
-		tmp = a->prev;
-		tmp1 = b->next;
-		tmp2 = a;
-		a->next = tmp1;
-		a->prev = b;
-		b->next = tmp2;
-		b->prev = tmp;
-		if (tmp)
-			tmp->next = b;
+		if (a->prev)
+		{
+			a->prev->next = b;
+			b->prev = a->prev;
+		}
 		else
-			begin = b;
-		if (tmp1)
-			tmp1->prev = tmp2;
-	}
+			b->prev = NULL;
+		if (b->next)
+		{
+			b->next->prev = a;
+			a->next = b->next;
+		}
+		else
+			a->next = NULL;
+		b->next = a;
+		a->prev = b;
+	}*/
+
+	if ( a->prev )
+    	a->prev->next = b;
+
+	if ( b->next )
+	    b->next->prev = a;
+
+	a->next = b->next;
+	b->prev = a->prev;
+
+	b->next = a;
+	a->prev = b;
 }
 
 void				debug_print(t_file *file)
 {
 	t_file *tmp;
+	static int i = 0;
 
 	tmp = file;
-	ft_putendl("\n-- DEBUG --");
+	ft_printf("\n-- DEBUG num[%d]--\n", i);
 	if (tmp)
 	{
 		while (tmp)
@@ -91,33 +109,34 @@ void				debug_print(t_file *file)
 			tmp = tmp->next;
 		}
 	}
-	ft_putendl("\n-- END DEBUG --");
+	i += 1;
+	ft_putendl("-- END DEBUG --\n");
 }
 
-void 				sort_alpha(t_file **file)
+void 				sort_alpha(t_file *file)
 {
 	t_file			*tmp;
 
-	tmp = *file;
-	debug_print(*file);
+	tmp = file;
+	//ft_putendl("Sort_alpha");
+	debug_print(file);
 	if (tmp)
 	{
-		while (!is_sort_alpha((*file)))
+		while (!is_sort_alpha((file)))
 		{
 			if (!tmp || !tmp->next)
-				tmp = (*file);
-			debug_print(*file);
-			ft_putchar('I');
-			if (tmp && tmp->next && ft_strcmp(tmp->next->name, tmp->name) > 0)
-				swap_file(tmp, tmp->next, (*file));
-			ft_putchar('J');
-			debug_print(*file);
+				tmp = file;
+			if (tmp && tmp->next && ft_strcmp(tmp->name, tmp->next->name) < 0)
+			{
+				debug_print(file);
+				swap_file(tmp, tmp->next);
+			}
 			tmp = tmp->next;
-			//if ((*file) && (*file)->name && tmp && tmp->name)
-			//	ft_printf("sort_alpha name = {%s}{%s}\n", (*file)->name, tmp->name);
 		}
 	}
-	debug_print(*file);
+
+	debug_print(file);
+//	ft_putendl("Sort_alpha END");
 }
 
 void 				sort_date(t_file *file)
@@ -132,7 +151,10 @@ void 				sort_date(t_file *file)
 			if (!tmp || !tmp->next)
 				tmp = file;
 			if (tmp && tmp->next && tmp->time < tmp->next->time)
-				swap_file(tmp, tmp->next, file);
+			{
+				debug_print(file);
+				swap_file(tmp, tmp->next);
+			}
 			tmp = tmp->next;
 		}
 	}
