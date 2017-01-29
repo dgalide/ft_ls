@@ -9,7 +9,8 @@ SRC = 	sources/main.c 												\
 		sources/readdir.c											\
 		sources/process.c											\
 		sources/print_manager.c 									\
-		sources/sort.c
+		sources/sort.c 												\
+		sources/swap.c
 		
 OBJ = $(SRC:.c=.o)
 FLAG = -Wall -Werror -Wextra -g -fsanitize=address

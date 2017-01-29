@@ -16,6 +16,8 @@ int 				is_sort_alpha(t_file *file)
 {
 	t_file			*tmp;
 	int 			bool_alpha;
+	char			*s1;
+	char			*s2;
 
 	tmp = file;
 	bool_alpha = 1;
@@ -23,7 +25,9 @@ int 				is_sort_alpha(t_file *file)
 	{
 		while (tmp->next)
 		{
-			if (ft_strcmp(tmp->name, tmp->next->name) < 0)
+			s1 = ft_strdup(tmp->name);
+			s2 = ft_strdup(tmp->next->name);
+			if (ft_strcmp(s1, s2) < 0)
 				bool_alpha = 0;
 			tmp = tmp->next;
 		}
@@ -32,7 +36,7 @@ int 				is_sort_alpha(t_file *file)
 	return ((bool_alpha) ? 1 : 0);
 }
 
-int 				is_sort_date(t_file *file)
+int 				is_sort_date(t_file *file, int direction)
 {
 	t_file			*tmp;
 	int 			bool_time;
@@ -43,8 +47,11 @@ int 				is_sort_date(t_file *file)
 	{
 		while (tmp->next)
 		{
-			if (tmp->time < tmp->next->time)
+			if ((tmp->time < tmp->next->time && !direction) || 
+				(tmp->time > tmp->next->time && direction))
+			{
 				bool_time = 0;
+			}
 			tmp = tmp->next;
 		}
 	}
@@ -113,47 +120,68 @@ void				debug_print(t_file *file)
 	ft_putendl("-- END DEBUG --\n");
 }
 
-void 				sort_alpha(t_file *file)
+void 				sort_alpha(t_file **file)
 {
 	t_file			*tmp;
+	t_file			*tmp1;
 
-	tmp = file;
-	//ft_putendl("Sort_alpha");
-	debug_print(file);
+	tmp = *file;
+	tmp1 = NULL;
 	if (tmp)
 	{
-		while (!is_sort_alpha((file)))
+		while (!is_sort_alpha((*file)))
 		{
 			if (!tmp || !tmp->next)
-				tmp = file;
+				tmp = *file;
 			if (tmp && tmp->next && ft_strcmp(tmp->name, tmp->next->name) < 0)
 			{
-				debug_print(file);
-				swap_file(tmp, tmp->next);
+				if (tmp == *file)
+					*file = tmp->next;
+				swap(tmp, tmp->next);
 			}
 			tmp = tmp->next;
 		}
 	}
-
-	debug_print(file);
-//	ft_putendl("Sort_alpha END");
 }
 
-void 				sort_date(t_file *file)
+void 				sort_date(t_file **file)
 {
 	t_file			*tmp;
 
-	tmp = file;
+	tmp = *file;
 	if (tmp)
 	{
-		while (!is_sort_date(file))
+		while (!is_sort_date(*file, 0))
 		{
 			if (!tmp || !tmp->next)
-				tmp = file;
+				tmp = *file;
 			if (tmp && tmp->next && tmp->time < tmp->next->time)
 			{
-				debug_print(file);
-				swap_file(tmp, tmp->next);
+				if (tmp == *file)
+					*file = tmp->next;
+				swap(tmp, tmp->next);
+			}
+			tmp = tmp->next;
+		}
+	}
+}
+
+void 				sort_rdate(t_file **file)
+{
+	t_file			*tmp;
+
+	tmp = *file;
+	if (tmp)
+	{
+		while (!is_sort_date(*file, 1))
+		{
+			if (!tmp || !tmp->next)
+				tmp = *file;
+			if (tmp && tmp->next && tmp->time > tmp->next->time)
+			{
+				if (tmp == *file)
+					*file = tmp->next;
+				swap(tmp, tmp->next);
 			}
 			tmp = tmp->next;
 		}

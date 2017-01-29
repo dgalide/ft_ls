@@ -67,10 +67,8 @@ void 		print_l_mode(t_file *file, t_ls *data)
 void		print_manager(t_file *file, t_ls *data)
 {
 
-	(data->opt->sr) ? sort_alpha(file) : 0;
-	(data->opt->t) ? sort_date(file) : 0;
-	if (!is_sort_alpha(file))
-		ft_putendl("\nNOT SORT ALPHA");
+	(data->opt->sr) ? sort_alpha(&file) : 0;
+	(data->opt->t && data->opt->sr) ? sort_rdate(&file) :sort_date(&file);
 	if (data->opt->l)	
 		print_l_mode(file, data);
 }
