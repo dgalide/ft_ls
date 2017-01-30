@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/26 20:07:06 by dgalide           #+#    #+#             */
-/*   Updated: 2017/01/30 21:24:28 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/01/30 21:36:30 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char		*time_handler(t_file *file, t_opt *opt)
 void 		print_l_mode(t_file *file, t_ls *data)
 {
 	t_file	*tmp;
+	mode_t tmp1;
 
 	tmp = file;
 	if (tmp && data)
@@ -44,22 +45,22 @@ void 		print_l_mode(t_file *file, t_ls *data)
 			if (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a))
 			{
 				//ft_printf("max_lnk = {%d} max_uid = {%d} max_gid = {%d} max_size = {%d}\n", data->max_lnk, data->max_uid, data->max_gid, data->max_size);
-				tmp->right_nu = (tmp->right_nu & ~S_IFMT);
-				ft_printf("%c%c%c%c%c%c%c%c%c%c  %*d %*s  %*s  ",
+				tmp1 = (tmp->right_nu & ~S_IFMT);
+				ft_printf("%c%c%c%c%c%c%c%c%c%c  %*d %-*s  %-*s  ",
 									tmp->first_right,\
-									((tmp->right_nu & S_IRUSR) ? 'r' : '-') ,\
-									((tmp->right_nu & S_IWUSR) ? 'w' : '-'),\
-									((tmp->right_nu & S_IXUSR) ? 'x' : '-'),\
-									((tmp->right_nu & S_IRGRP) ? 'r' : '-'),\
-									((tmp->right_nu & S_IWGRP) ? 'w' : '-'),\
-									((tmp->right_nu & S_IXGRP) ? 'x' : '-'),\
-									((tmp->right_nu & S_IROTH) ? 'r' : '-'),\
-									((tmp->right_nu & S_IWOTH) ? 'w' : '-'),\
-									((tmp->right_nu & S_IXOTH) ? 'x' : '-'),\
+									((tmp1 & S_IRUSR) ? 'r' : '-') ,\
+									((tmp1 & S_IWUSR) ? 'w' : '-'),\
+									((tmp1 & S_IXUSR) ? 'x' : '-'),\
+									((tmp1 & S_IRGRP) ? 'r' : '-'),\
+									((tmp1 & S_IWGRP) ? 'w' : '-'),\
+									((tmp1 & S_IXGRP) ? 'x' : '-'),\
+									((tmp1 & S_IROTH) ? 'r' : '-'),\
+									((tmp1 & S_IWOTH) ? 'w' : '-'),\
+									((tmp1 & S_IXOTH) ? 'x' : '-'),\
 				data->max_lnk, tmp->nb_hard_link, data->max_uid, tmp->name_usr,
 				data->max_gid, tmp->name_grp);
 				if (S_ISCHR(tmp->right_nu) || S_ISBLK(tmp->right_nu))
-					ft_printf("%-*d,%-*d ", data->max_major, tmp->minor, data->max_major, tmp->major);
+					ft_printf("%*d,%*d ", data->max_major, tmp->major, data->max_major, tmp->minor);
 				else
 					ft_printf("%*d ", data->max_major, tmp->minor);
 				ft_printf("%s %s\n", time_handler(tmp, data->opt), tmp->name);
