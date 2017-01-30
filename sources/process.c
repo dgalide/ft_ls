@@ -105,14 +105,15 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_
 	new = (t_file *)malloc(sizeof(t_file));
 	if (cur_path && file_stat && new)
 	{
-		data->byte_blocks += file_stat->st_blocks;
+		new->name = ft_strdup(dir->d_name);
 		new->bool_parent = is_parent_dir(dir->d_name);
 		new->bool_current = is_current_dire(dir->d_name);
+		if (new->name[0] != '.' || (new->name[0] == '.' && data->opt->a))
+			data->byte_blocks += file_stat->st_blocks;
 		new->path = format_path(cur_path, dir->d_name);
 		new->st_size = (int)file_stat->st_size;
 		new->mtime = ft_strdup(ctime(&(file_stat->st_mtime)));
 		new->time = file_stat->st_mtime;
-		new->name = ft_strdup(dir->d_name);
 		new->is_dir = (dir->d_type == 4) ? 1 : 0;
 		new->nb_hard_link = file_stat->st_nlink;
 		(getpwuid(file_stat->st_uid)) ?

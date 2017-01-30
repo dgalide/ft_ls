@@ -58,7 +58,7 @@ void 		print_l_mode(t_file *file, t_ls *data)
 									((tmp->right_nu & S_IXOTH) ? 'x' : '-'),\
 				data->max_lnk, tmp->nb_hard_link, data->max_uid, tmp->name_usr,
 				data->max_gid, tmp->name_grp, data->max_size, tmp->st_size,
-				time_handler(file, data->opt), tmp->name);
+				time_handler(tmp, data->opt), tmp->name);
 			}
 
 			tmp = tmp->next;
