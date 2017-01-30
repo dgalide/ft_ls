@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/26 20:07:06 by dgalide           #+#    #+#             */
-/*   Updated: 2017/01/27 00:37:33 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/01/30 21:24:28 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void 		print_l_mode(t_file *file, t_ls *data)
 			{
 				//ft_printf("max_lnk = {%d} max_uid = {%d} max_gid = {%d} max_size = {%d}\n", data->max_lnk, data->max_uid, data->max_gid, data->max_size);
 				tmp->right_nu = (tmp->right_nu & ~S_IFMT);
-				ft_printf("%c%c%c%c%c%c%c%c%c%c  %*d %*s  %*s  %*d %s %s\n",
+				ft_printf("%c%c%c%c%c%c%c%c%c%c  %*d %*s  %*s  ",
 									tmp->first_right,\
 									((tmp->right_nu & S_IRUSR) ? 'r' : '-') ,\
 									((tmp->right_nu & S_IWUSR) ? 'w' : '-'),\
@@ -57,10 +57,13 @@ void 		print_l_mode(t_file *file, t_ls *data)
 									((tmp->right_nu & S_IWOTH) ? 'w' : '-'),\
 									((tmp->right_nu & S_IXOTH) ? 'x' : '-'),\
 				data->max_lnk, tmp->nb_hard_link, data->max_uid, tmp->name_usr,
-				data->max_gid, tmp->name_grp, data->max_size, tmp->st_size,
-				time_handler(tmp, data->opt), tmp->name);
+				data->max_gid, tmp->name_grp);
+				if (S_ISCHR(tmp->right_nu) || S_ISBLK(tmp->right_nu))
+					ft_printf("%-*d,%-*d ", data->max_major, tmp->minor, data->max_major, tmp->major);
+				else
+					ft_printf("%*d ", data->max_major, tmp->minor);
+				ft_printf("%s %s\n", time_handler(tmp, data->opt), tmp->name);
 			}
-
 			tmp = tmp->next;
 		}
 	}
