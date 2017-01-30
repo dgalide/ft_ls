@@ -75,7 +75,10 @@ int 		is_current_dire(char *file)
 		return (0);
 }
 
-void 		set_first_right(t_file *file, t_la *data, struct stat *file_stat)
+//void 		set_first_right(t_file *file, t_ls *data, struct stat *file_stat)
+//{
+//
+//}
 
 t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_ls *data)
 {
