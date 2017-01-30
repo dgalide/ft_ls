@@ -75,10 +75,28 @@ int 		is_current_dire(char *file)
 		return (0);
 }
 
-//void 		set_first_right(t_file *file, t_ls *data, struct stat *file_stat)
-//{
-//
-//}
+void 		set_first_right(t_file *file, struct stat *file_stat)
+{
+	int val;
+
+	val = file_stat->st_mode;;
+	if (S_ISBLK(val))
+		file->first_right = 'b';
+	else if (S_ISCHR(val))
+		file->first_right = 'c';
+	else if (S_ISDIR(val))
+		file->first_right = 'd';
+	else if (S_ISFIFO(val))
+		file->first_right = 'p';
+	else if (S_ISLNK(val))
+		file->first_right = 'l';
+	else if (S_ISREG(val))
+		file->first_right = '-';
+	else if (S_ISSOCK(val))
+		file->first_right = 's';
+	else
+		file->first_right = '-';
+}
 
 t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_ls *data)
 {
@@ -107,7 +125,7 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_
 		new->right_nu = file_stat->st_mode;
 		new->next = NULL;
 		new->prev = NULL;
-		set_first_right(file, data, file_stat);
+		set_first_right(new, file_stat);
 		if (S_ISCHR(new->right_nu) || S_ISBLK(new->right_nu))
 		{
 			new->major = major(file_stat->st_rdev);

@@ -50,6 +50,7 @@ typedef struct 			s_file
 	int 				nb_hard_link;
 	char 				*name_usr;
 	char 				*name_grp;
+	char				first_right;
 	int 				bool_current;
 	int 				bool_parent;
 	int					inode_nu;
@@ -69,6 +70,12 @@ typedef struct 			s_ls
 	t_opt				*opt;
 	t_arg				*arg;
 	t_file 				*file;
+	int 				max_minor;
+	int 				max_major;
+	int 				max_lnk;
+	int 				max_gid;
+	int 				max_uid;
+	int 				max_size;
 	int 				byte_blocks;
 }						t_ls;
 
@@ -88,6 +95,7 @@ int 					is_sort_alpha(t_file *file);
 void 					sort_alpha(t_file **file);
 void 					sort_date(t_file **file);
 void 					sort_rdate(t_file **file);
-void 					swap(t_file *a, t_file *B);
+void 					swap(t_file *a, t_file *b);
+void 					define_max_field(t_file **file, t_ls *data);
 
 #endif

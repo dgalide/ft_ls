@@ -10,7 +10,8 @@ SRC = 	sources/main.c 												\
 		sources/process.c											\
 		sources/print_manager.c 									\
 		sources/sort.c 												\
-		sources/swap.c
+		sources/swap.c 												\
+		sources/define_max_field.c 									
 		
 OBJ = $(SRC:.c=.o)
 FLAG = -Wall -Werror -Wextra -g -fsanitize=address
