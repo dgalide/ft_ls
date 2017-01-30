@@ -43,8 +43,8 @@ void 		print_l_mode(t_file *file, t_ls *data)
 			if (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a))
 			{
 				tmp->right_nu = (tmp->right_nu & ~S_IFMT);
-				ft_printf("%c%c%c%c%c%c%c%c%c%c  %d %s %s %d %s %s\n",\
-									((tmp->is_dir) ? 'd' : '-'),\
+				ft_printf("%c%c%c%c%c%c%c%c%c%c"
+									'-',\
 									((tmp->right_nu & S_IRUSR) ? 'r' : '-') ,\
 									((tmp->right_nu & S_IWUSR) ? 'w' : '-'),\
 									((tmp->right_nu & S_IXUSR) ? 'x' : '-'),\
@@ -53,11 +53,7 @@ void 		print_l_mode(t_file *file, t_ls *data)
 									((tmp->right_nu & S_IXGRP) ? 'x' : '-'),\
 									((tmp->right_nu & S_IROTH) ? 'r' : '-'),\
 									((tmp->right_nu & S_IWOTH) ? 'w' : '-'),\
-									((tmp->right_nu & S_IXOTH) ? 'x' : '-'),\
-									tmp->nb_hard_link, tmp->name_usr,
-									tmp->name_grp, tmp->st_size, 
-									time_handler(tmp, data->opt),
-									tmp->name);
+									((tmp->right_nu & S_IXOTH) ? 'x' : '-'))
 			}
 			tmp = tmp->next;
 		}
@@ -68,7 +64,8 @@ void		print_manager(t_file *file, t_ls *data)
 {
 
 	(data->opt->sr) ? sort_alpha(&file) : 0;
-	(data->opt->t && data->opt->sr) ? sort_rdate(&file) :sort_date(&file);
+	(data->opt->t && data->opt->sr) ? sort_rdate(&file) : 0;
+	(data->opt->t && !(data->opt->sr)) ? sort_date(&file) : 0;
 	if (data->opt->l)	
 		print_l_mode(file, data);
 }

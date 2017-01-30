@@ -12,6 +12,19 @@
 
 #include "../includes/ft_ls.h" 
 
+int				ft_check_cols(int tmp)
+{
+	int i;
+
+	i = 1;
+	while (tmp > 9)
+	{
+		tmp /= 10;
+		i++;
+	}
+	return (i);
+}
+
 t_arg		*new_dir(char *path, char *dir)
 {
 	t_arg	*new;
@@ -62,6 +75,8 @@ int 		is_current_dire(char *file)
 		return (0);
 }
 
+void 		set_first_right(t_file *file, t_la *data, struct stat *file_stat)
+
 t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_ls *data)
 {
 	t_file	*new;
@@ -89,6 +104,17 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_
 		new->right_nu = file_stat->st_mode;
 		new->next = NULL;
 		new->prev = NULL;
+		set_first_right(file, data, file_stat);
+		if (S_ISCHR(new->right_nu) || S_ISBLK(new->right_nu))
+		{
+			new->major = major(file_stat->st_rdev);
+			new->minor = minor(file_stat->st_rdev);
+		}
+		else
+		{
+			new->major = 0;
+			new->minor = (int)file_stat->st_size;
+		}
 		return (new);
 	}
 	else

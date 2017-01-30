@@ -36,7 +36,6 @@ void swap(t_file *a, t_file *b)
     swapperVector[3] = b->next;
     if (is_neighbours(a,b))
     {
-    	//ft_putchar('a');
         a->prev = swapperVector[2];
         b->prev = swapperVector[0];
         a->next = swapperVector[3];
@@ -44,7 +43,6 @@ void swap(t_file *a, t_file *b)
     }
     else
     {
-    	//ft_putchar('b');
         a->prev = swapperVector[1];
         b->prev = swapperVector[0];
         a->next = swapperVector[3];

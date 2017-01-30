@@ -58,6 +58,8 @@ typedef struct 			s_file
 	int     			st_size;
 	char 	   			*mtime;
 	long 				time;
+	int 				major;
+	int 				minor;
 	struct s_file		*next;
 	struct s_file		*prev;
 }						t_file;

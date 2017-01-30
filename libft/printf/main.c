@@ -15,6 +15,8 @@
 
 void			process(t_data *data, va_list arg)
 {
+	if (ft_strchr(data->setting, '*'))
+		data->minimal_range = (int)(va_arg(arg, void *));
 	if (data->modifier == 'd' ||
 		data->modifier == 'i' || data->modifier == 'D')
 		decimal_handler(data, arg);

@@ -15,25 +15,18 @@
 int 				is_sort_alpha(t_file *file)
 {
 	t_file			*tmp;
-	int 			bool_alpha;
-	char			*s1;
-	char			*s2;
 
 	tmp = file;
-	bool_alpha = 1;
 	if (tmp)
 	{
 		while (tmp->next)
 		{
-			s1 = ft_strdup(tmp->name);
-			s2 = ft_strdup(tmp->next->name);
-			if (ft_strcmp(s1, s2) < 0)
-				bool_alpha = 0;
+			if (ft_strcmp(tmp->name, tmp->next->name) < 0)
+				return (0);
 			tmp = tmp->next;
 		}
 	}
-//	ft_printf("is_sort_alpha{%d}\n", bool_alpha);
-	return ((bool_alpha) ? 1 : 0);
+	return (1);
 }
 
 int 				is_sort_date(t_file *file, int direction)
