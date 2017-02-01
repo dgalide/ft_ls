@@ -34,8 +34,10 @@ void 		print_l_mode(t_file *file, t_ls *data)
 {
 	t_file	*tmp;
 	mode_t tmp1;
+	int bool_major;
 
 	tmp = file;
+	bool_major = 0;
 	if (tmp && data)
 	{
 		define_max_field(&file, data);
@@ -60,9 +62,12 @@ void 		print_l_mode(t_file *file, t_ls *data)
 				data->max_lnk, tmp->nb_hard_link, data->max_uid, tmp->name_usr,
 				data->max_gid, tmp->name_grp);
 				if (S_ISCHR(tmp->right_nu) || S_ISBLK(tmp->right_nu))
+				{
+					bool_major = 1;
 					ft_printf("%*d,%*d ", data->max_major, tmp->major, data->max_major, tmp->minor);
+				}
 				else
-					ft_printf("%*d ", data->max_major, tmp->minor);
+					ft_printf("%*d ", ((bool_major) ? data->max_major * 2 + 1 : data->max_major) , tmp->minor);
 				ft_printf("%s %s\n", time_handler(tmp, data->opt), tmp->name);
 			}
 			tmp = tmp->next;
