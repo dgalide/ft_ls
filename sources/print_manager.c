@@ -30,6 +30,20 @@ char		*time_handler(t_file *file, t_opt *opt)
 	return (tmp);
 }
 
+int 		check_major(t_file *file)
+{
+	t_file	*tmp;
+
+	tmp = file;
+	while (tmp)
+	{
+		if (S_ISCHR(tmp->right_nu) || S_ISBLK(tmp->right_nu))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 void 		print_l_mode(t_file *file, t_ls *data)
 {
 	t_file	*tmp;
@@ -37,7 +51,7 @@ void 		print_l_mode(t_file *file, t_ls *data)
 	int bool_major;
 
 	tmp = file;
-	bool_major = 0;
+	bool_major = check_major(file);
 	if (tmp && data)
 	{
 		define_max_field(&file, data);
@@ -46,7 +60,6 @@ void 		print_l_mode(t_file *file, t_ls *data)
 		{
 			if (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a))
 			{
-				//ft_printf("max_lnk = {%d} max_uid = {%d} max_gid = {%d} max_size = {%d}\n", data->max_lnk, data->max_uid, data->max_gid, data->max_size);
 				tmp1 = (tmp->right_nu & ~S_IFMT);
 				ft_printf("%c%c%c%c%c%c%c%c%c%c  %*d %-*s  %-*s  ",
 									tmp->first_right,\
@@ -62,10 +75,7 @@ void 		print_l_mode(t_file *file, t_ls *data)
 				data->max_lnk, tmp->nb_hard_link, data->max_uid, tmp->name_usr,
 				data->max_gid, tmp->name_grp);
 				if (S_ISCHR(tmp->right_nu) || S_ISBLK(tmp->right_nu))
-				{
-					bool_major = 1;
 					ft_printf("%*d,%*d ", data->max_major, tmp->major, data->max_major, tmp->minor);
-				}
 				else
 					ft_printf("%*d ", ((bool_major) ? data->max_major * 2 + 1 : data->max_major) , tmp->minor);
 				ft_printf("%s %s\n", time_handler(tmp, data->opt), tmp->name);
@@ -77,7 +87,7 @@ void 		print_l_mode(t_file *file, t_ls *data)
 
 void		print_manager(t_file *file, t_ls *data)
 {
-
+	sort_alpha_rev(&file);
 	(data->opt->sr) ? sort_alpha(&file) : 0;
 	(data->opt->t && data->opt->sr) ? sort_rdate(&file) : 0;
 	(data->opt->t && !(data->opt->sr)) ? sort_date(&file) : 0;

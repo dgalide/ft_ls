@@ -93,6 +93,7 @@ void					print_manager(t_file *file, t_ls *data);
 int 					is_sort_date(t_file *file, int direction);
 int 					is_sort_alpha(t_file *file);
 void 					sort_alpha(t_file **file);
+void 					sort_alpha_rev(t_file **file);
 void 					sort_date(t_file **file);
 void 					sort_rdate(t_file **file);
 void 					swap(t_file *a, t_file *b);
