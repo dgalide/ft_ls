@@ -68,49 +68,6 @@ int 				is_sort_date(t_file *file, int direction)
 	return ((bool_time) ? 1 : 0);
 }
 
-void				swap_file(t_file *a, t_file *b)
-{
-
-	/*t_file 			*tmp;
-	t_file			*tmp1;
-	t_file			*tmp2;
-
-	tmp = NULL;
-	tmp1 = NULL;
-	tmp2 = NULL;
-	if (a && b)
-	{
-		if (a->prev)
-		{
-			a->prev->next = b;
-			b->prev = a->prev;
-		}
-		else
-			b->prev = NULL;
-		if (b->next)
-		{
-			b->next->prev = a;
-			a->next = b->next;
-		}
-		else
-			a->next = NULL;
-		b->next = a;
-		a->prev = b;
-	}*/
-
-	if ( a->prev )
-    	a->prev->next = b;
-
-	if ( b->next )
-	    b->next->prev = a;
-
-	a->next = b->next;
-	b->prev = a->prev;
-
-	b->next = a;
-	a->prev = b;
-}
-
 void				debug_print(t_file *file)
 {
 	t_file *tmp;
