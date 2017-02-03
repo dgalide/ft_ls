@@ -51,5 +51,8 @@ int 				parse_arg(t_ls *data, char *str)
 			return (1);
 	}
 	else
+	{
+		ft_printf("ERROR {%s} NOT VALID", str);
 		return (0);
+	}
 }

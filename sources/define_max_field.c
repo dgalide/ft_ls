@@ -76,6 +76,22 @@ void 				define_max_field_ext(t_file **file, t_ls *data)
 	define_max_minor_major(file, data);
 }
 
+void 				define_max_filename(t_file **file, t_ls *data)
+{
+	t_file			*tmp;
+	int 			max;
+
+	tmp = *file;
+	max = 0;
+	while (tmp)
+	{
+		if ((int)ft_strlen(tmp->name) > max && (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a)))
+			max = ft_strlen(tmp->name);
+		tmp = tmp->next;
+	}
+	data->max_name = max;
+}
+
 void 				define_max_field(t_file **file, t_ls *data)
 {
 	t_file			*tmp;
@@ -106,4 +122,5 @@ void 				define_max_field(t_file **file, t_ls *data)
 	}
 	data->max_size = max_col;
 	define_max_field_ext(file, data);
+	define_max_filename(file, data);
 }

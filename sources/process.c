@@ -38,7 +38,6 @@ t_arg		*new_dir(char *path, char *dir)
 		new->next = NULL;
 		new->prev = NULL;
 		new->name_dir = ft_strjoin_free(&tmp, &dir, 1, 0);
-		ft_printf("\n-- NEW_DIR --\n new->name_dir = {%s}\n", new->name_dir);
 		return (new);
 	}
 	else
@@ -98,6 +97,29 @@ void 		set_first_right(t_file *file, struct stat *file_stat)
 		file->first_right = '-';
 }
 
+void		set_byte_blocks(t_file **file, t_ls *data)
+{
+	t_file	*tmp;
+	int byte_blocks;
+	struct 	stat file_stat;
+
+	byte_blocks = 0;
+	tmp = *file;
+	(void)data;
+	while (tmp)
+	{
+		if (!lstat(tmp->path, &file_stat) && (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a)))
+			byte_blocks += file_stat.st_blocks;
+		tmp = tmp->next;
+	}
+	tmp = *file;
+	while (tmp)
+	{
+		tmp->byte_blocks = byte_blocks;
+		tmp = tmp->next;
+	}
+}
+
 t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_ls *data)
 {
 	t_file	*new;
@@ -108,9 +130,8 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_
 		new->name = ft_strdup(dir->d_name);
 		new->bool_parent = is_parent_dir(dir->d_name);
 		new->bool_current = is_current_dire(dir->d_name);
-		if (new->name[0] != '.' || (new->name[0] == '.' && data->opt->a))
-			data->byte_blocks += file_stat->st_blocks;
 		new->path = format_path(cur_path, dir->d_name);
+		new->parent_path = ft_strdup(cur_path);
 		new->st_size = (int)file_stat->st_size;
 		new->mtime = ft_strdup(ctime(&(file_stat->st_mtime)));
 		new->time = file_stat->st_mtime;
@@ -127,6 +148,7 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_
 		new->next = NULL;
 		new->prev = NULL;
 		set_first_right(new, file_stat);
+		(void)data;
 		if (S_ISCHR(new->right_nu) || S_ISBLK(new->right_nu))
 		{
 			new->major = major(file_stat->st_rdev);
@@ -202,7 +224,6 @@ void		read_dir(char *path, t_ls *data)
 		{
 			while ((dir = readdir(fd)))
 			{
-				//ft_putendl(dir->d_name);
 				if (lstat(format_path(path, dir->d_name), &file_stat) == 0)
 					add_file(new_file(dir, &file_stat, path, data), &file);
 			}
@@ -219,6 +240,11 @@ void		ls_process(t_ls *data)
 	t_arg	*arg;
 
 	arg = data->arg;
+	if (!arg)
+	{
+		add_arg(data, ".");
+		arg = data->arg;
+	}
 	while (arg)
 	{
 		read_dir(arg->name_dir, data);

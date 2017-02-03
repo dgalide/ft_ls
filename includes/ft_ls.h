@@ -45,12 +45,14 @@ typedef struct 			s_arg
 typedef struct 			s_file
 {
 	char				*path;
+	char				*parent_path;
 	char				*name;
 	int 				denied_acces;
 	int 				nb_hard_link;
 	char 				*name_usr;
 	char 				*name_grp;
 	char				first_right;
+	int 				byte_blocks;
 	int 				bool_current;
 	int 				bool_parent;
 	int					inode_nu;
@@ -73,10 +75,10 @@ typedef struct 			s_ls
 	int 				max_minor;
 	int 				max_major;
 	int 				max_lnk;
+	int 				max_name;
 	int 				max_gid;
 	int 				max_uid;
 	int 				max_size;
-	int 				byte_blocks;
 }						t_ls;
 
 int						main(int ac, char **av);
@@ -84,6 +86,7 @@ int						init_data(t_ls *ls, char **av, int ac);
 int 					parse(t_ls *ls, char *arg);
 int 					parse_opt(t_ls *ls, char *str);
 int 					parse_arg(t_ls *ls, char *str);
+void					set_byte_blocks(t_file **file, t_ls *data);
 void					ls_process(t_ls *data);
 char					*recursive_read(t_ls *data, char *name, int stop);
 int						add_arg(t_ls *data, char *name);

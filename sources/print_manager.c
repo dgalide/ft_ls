@@ -52,10 +52,11 @@ void 		print_l_mode(t_file *file, t_ls *data)
 
 	tmp = file;
 	bool_major = check_major(file);
+	set_byte_blocks(&file, data);
 	if (tmp && data)
 	{
-		define_max_field(&file, data);
-		ft_printf("total %d\n", data->byte_blocks);
+		ft_printf("%s:\n", tmp->parent_path);
+		ft_printf("total %d\n", tmp->byte_blocks);
 		while (tmp)
 		{
 			if (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a))
@@ -79,9 +80,29 @@ void 		print_l_mode(t_file *file, t_ls *data)
 				else
 					ft_printf("%*d ", ((bool_major) ? data->max_major * 2 + 1 : data->max_major) , tmp->minor);
 				ft_printf("%s %s\n", time_handler(tmp, data->opt), tmp->name);
+				if (!tmp->next)
+					ft_putchar('\n');
 			}
 			tmp = tmp->next;
 		}
+	}
+}
+
+void		print_classic_mode(t_file *file, t_ls *data)
+{
+	t_file	*tmp;
+
+	tmp = file;
+	while (tmp)
+	{
+		if (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a))
+		{
+			if (tmp->next)
+				ft_printf("%-*s ", data->max_name, tmp->name);
+			else
+				ft_printf("%s", tmp->name);
+		}
+		tmp = tmp->next;
 	}
 }
 
@@ -91,6 +112,9 @@ void		print_manager(t_file *file, t_ls *data)
 	(data->opt->sr) ? sort_alpha(&file) : 0;
 	(data->opt->t && data->opt->sr) ? sort_rdate(&file) : 0;
 	(data->opt->t && !(data->opt->sr)) ? sort_date(&file) : 0;
-	if (data->opt->l)	
+	define_max_field(&file, data);
+	if (data->opt->l)
 		print_l_mode(file, data);
+	else
+		print_classic_mode(file, data);
 }
