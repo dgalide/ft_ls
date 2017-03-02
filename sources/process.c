@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgalide <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/24 22:55:15 by dgalide           #+#    #+#             */
-/*   Updated: 2017/01/30 21:24:20 by jtranchi         ###   ########.fr       */
+/*   Created: 2017/02/28 13:34:39 by dgalide           #+#    #+#             */
+/*   Updated: 2017/02/28 13:34:42 by dgalide          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_arg		*new_dir(char *path, char *dir)
 	tmp = NULL;
 	if (path && new)
 	{
-		tmp = ft_strjoin(path, "/");
+		tmp = ft_strjoin(path,
+			(path[ft_strlen(path) - 1] != '/') ? "/" : NULL);
 		new->next = NULL;
 		new->prev = NULL;
 		new->name_dir = ft_strjoin_free(&tmp, &dir, 1, 0);
@@ -51,7 +52,8 @@ char		*format_path(char *curr_path, char *name_file)
 	tmp = NULL;
 	if (curr_path && name_file)
 	{
-		tmp = ft_strjoin(curr_path, "/");
+		tmp = ft_strjoin(curr_path,
+			(curr_path[ft_strlen(curr_path) - 1] != '/') ? "/" : NULL);
 		return (ft_strjoin_free(&tmp, &name_file, 1, 0));
 	}
 	else
@@ -78,7 +80,7 @@ void 		set_first_right(t_file *file, struct stat *file_stat)
 {
 	int val;
 
-	val = file_stat->st_mode;;
+	val = file_stat->st_mode;
 	if (S_ISBLK(val))
 		file->first_right = 'b';
 	else if (S_ISCHR(val))
@@ -200,7 +202,8 @@ void		find_dir(t_file **file, t_ls *data)
 	{
 		while (tmp)
 		{
-			if (tmp->is_dir && !is_current(tmp->name))
+			if (tmp->is_dir && !is_current(tmp->name) &&
+				((tmp->name)[0] != '.' || ((tmp->name)[0] != '.' && data->opt->a)))
 				read_dir(tmp->path, data);
 			tmp = tmp->next;
 		}
@@ -220,6 +223,7 @@ void		read_dir(char *path, t_ls *data)
 	if (path)
 	{
 		fd = opendir(path);
+		//ft_printf("%s\n", path);
 		if (fd)
 		{
 			while ((dir = readdir(fd)))

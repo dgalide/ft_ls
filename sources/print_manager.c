@@ -62,7 +62,7 @@ void 		print_l_mode(t_file *file, t_ls *data)
 			if (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a))
 			{
 				tmp1 = (tmp->right_nu & ~S_IFMT);
-				ft_printf("%c%c%c%c%c%c%c%c%c%c  %*d %-*s  %-*s  ",
+				ft_printf("%c%c%c%c%c%c%c%c%c%c  %*d %-*s  %-*s ",
 									tmp->first_right,\
 									((tmp1 & S_IRUSR) ? 'r' : '-') ,\
 									((tmp1 & S_IWUSR) ? 'w' : '-'),\

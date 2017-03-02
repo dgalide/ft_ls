@@ -32,5 +32,6 @@ int				main(int ac, char **av)
 	if (!init_data(&data, av, ac))
 		return (0);
 	ls_process(&data);
+	return (0);
 	//print_data(&data);
 }
