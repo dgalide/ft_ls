@@ -122,6 +122,24 @@ void		set_byte_blocks(t_file **file, t_ls *data)
 	}
 }
 
+void		hard_link_handler(t_file *new)
+{
+	char *tmp;
+	size_t len;
+
+	len = 0;
+	tmp = NULL;
+	if (new->first_right == 'l')
+	{
+		ft_printf("YOYYOYOYYOYOYO\n");
+		readlink(new->path, tmp, len);
+	
+		ft_printf("{%s}\n", tmp);
+	}
+	else
+		new->sym_link = NULL;
+}
+
 t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_ls *data)
 {
 	t_file	*new;
@@ -150,6 +168,7 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat, char *cur_path, t_
 		new->next = NULL;
 		new->prev = NULL;
 		set_first_right(new, file_stat);
+		hard_link_handler(new);
 		(void)data;
 		if (S_ISCHR(new->right_nu) || S_ISBLK(new->right_nu))
 		{

@@ -59,6 +59,7 @@ typedef struct 			s_file
 	mode_t 				right_nu;
 	int 				is_dir;
 	int     			st_size;
+	char				*sym_link;
 	char 	   			*mtime;
 	long 				time;
 	int 				major;

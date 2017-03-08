@@ -47,6 +47,7 @@ int 		check_major(t_file *file)
 void 		print_l_mode(t_file *file, t_ls *data)
 {
 	t_file	*tmp;
+	static int br;
 	mode_t tmp1;
 	int bool_major;
 
@@ -55,7 +56,7 @@ void 		print_l_mode(t_file *file, t_ls *data)
 	set_byte_blocks(&file, data);
 	if (tmp && data)
 	{
-		ft_printf("%s:\n", tmp->parent_path);
+		(br++ != 0) ? ft_printf("%s:\n", tmp->parent_path) : 0;
 		ft_printf("total %d\n", tmp->byte_blocks);
 		while (tmp)
 		{
