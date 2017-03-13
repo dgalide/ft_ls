@@ -52,7 +52,27 @@ int 				parse_arg(t_ls *data, char *str)
 	}
 	else
 	{
-		ft_printf("ERROR {%s} NOT VALID", str);
+		error_handler(str, data, 1);
 		return (0);
 	}
 }
+
+// t_arg		*new_dir(char *path, char *dir)
+// {
+// 	t_arg	*new;
+// 	char	*tmp;
+
+// 	new = (t_arg *)malloc(sizeof(t_arg));
+// 	tmp = NULL;
+// 	if (path && new)
+// 	{
+// 		tmp = ft_strjoin(path,
+// 			(path[ft_strlen(path) - 1] != '/') ? "/" : NULL);
+// 		new->next = NULL;
+// 		new->prev = NULL;
+// 		new->name_dir = ft_strjoin_free(&tmp, &dir, 1, 0);
+// 		return (new);
+// 	}
+// 	else
+// 		return (NULL);
+// }

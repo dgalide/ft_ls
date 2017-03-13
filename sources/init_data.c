@@ -24,6 +24,7 @@ static t_opt	*init_opt(void)
 	opt->a = 0;
 	opt->t = 0;
 	opt->bt = 0;
+	opt->sg = 0;
 	return (opt);
 }
 

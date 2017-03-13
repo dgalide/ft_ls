@@ -6,12 +6,16 @@ SRC = 	sources/main.c 												\
 		sources/parse.c												\
 		sources/parse_opt.c											\
 		sources/parse_file.c										\
-		sources/readdir.c											\
 		sources/process.c											\
 		sources/print_manager.c 									\
 		sources/sort.c 												\
 		sources/swap.c 												\
-		sources/define_max_field.c 									
+		sources/define_max_field.c 									\
+		sources/print_l.c 											\
+		sources/file.c 												\
+		sources/utils/utils0.c 										\
+		sources/utils/utils1.c 										\
+		sources/error.c 
 		
 OBJ = $(SRC:.c=.o)
 FLAG = -Wall -Werror -Wextra -g -fsanitize=address
