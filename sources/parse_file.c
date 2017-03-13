@@ -12,10 +12,10 @@
 
 #include "../includes/ft_ls.h"
 
-int				add_arg(t_ls *data, char *name)
+int					add_arg(t_ls *data, char *name)
 {
-	t_arg		*new_file;
-	t_arg		*tmp;
+	t_arg			*new_file;
+	t_arg			*tmp;
 
 	tmp = NULL;
 	new_file = (t_arg *)malloc(sizeof(t_arg));
@@ -37,7 +37,7 @@ int				add_arg(t_ls *data, char *name)
 	return (1);
 }
 
-int 				parse_arg(t_ls *data, char *str)
+int					parse_arg(t_ls *data, char *str)
 {
 	DIR				*fd;
 
@@ -56,23 +56,3 @@ int 				parse_arg(t_ls *data, char *str)
 		return (0);
 	}
 }
-
-// t_arg		*new_dir(char *path, char *dir)
-// {
-// 	t_arg	*new;
-// 	char	*tmp;
-
-// 	new = (t_arg *)malloc(sizeof(t_arg));
-// 	tmp = NULL;
-// 	if (path && new)
-// 	{
-// 		tmp = ft_strjoin(path,
-// 			(path[ft_strlen(path) - 1] != '/') ? "/" : NULL);
-// 		new->next = NULL;
-// 		new->prev = NULL;
-// 		new->name_dir = ft_strjoin_free(&tmp, &dir, 1, 0);
-// 		return (new);
-// 	}
-// 	else
-// 		return (NULL);
-// }

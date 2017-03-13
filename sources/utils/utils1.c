@@ -12,9 +12,9 @@
 
 #include "../../includes/ft_ls.h"
 
-char		*format_path(char *curr_path, char *name_file)
+char				*format_path(char *curr_path, char *name_file)
 {
-	char	*tmp;
+	char			*tmp;
 
 	tmp = NULL;
 	if (curr_path && name_file)
@@ -25,4 +25,17 @@ char		*format_path(char *curr_path, char *name_file)
 	}
 	else
 		return (NULL);
+}
+
+int					check_colon(int value)
+{
+	int				i;
+
+	i = 0;
+	while (value)
+	{
+		i += 1;
+		value /= 10;
+	}
+	return (i);
 }

@@ -28,9 +28,9 @@ static t_opt	*init_opt(void)
 	return (opt);
 }
 
-int			init_data(t_ls *data, char **av, int ac)
+int				init_data(t_ls *data, char **av, int ac)
 {
-	int 		i;
+	int			i;
 
 	i = 0;
 	data->arg = NULL;

@@ -18,7 +18,7 @@ void			print_right(t_file *file)
 
 	tmp1 = (file->right_nu & ~S_IFMT);
 	ft_printf("%c%c%c%c%c%c%c%c%c%c  ", file->first_right,\
-									((tmp1 & S_IRUSR) ? 'r' : '-') ,\
+									((tmp1 & S_IRUSR) ? 'r' : '-'),\
 									((tmp1 & S_IWUSR) ? 'w' : '-'),\
 									((tmp1 & S_IXUSR) ? 'x' : '-'),\
 									((tmp1 & S_IRGRP) ? 'r' : '-'),\
@@ -36,16 +36,19 @@ void			print_l_mode_extend(t_file *file, t_ls *data, int bool_major)
 	(!(data->opt->sg)) ? ft_printf("%-*s  ", data->max_uid, file->name_usr) : 0;
 	ft_printf("%-*s ", data->max_gid, file->name_grp);
 	if (S_ISCHR(file->right_nu) || S_ISBLK(file->right_nu))
-		ft_printf("%*d,%*d ", data->max_major, file->major, data->max_major, file->minor);
+		ft_printf("%*d,%*d ", data->max_major, file->major,
+			data->max_major, file->minor);
 	else
-		ft_printf("%*d ", ((bool_major) ? data->max_major * 2 + 1 : data->max_major) , file->minor);
+		ft_printf("%*d ", ((bool_major) ? data->max_major * 2 + 1 :
+			data->max_major), file->minor);
 	ft_printf("%s %s", time_handler(file, data->opt), file->name);
-	(file->first_right == 'l') ? ft_printf(" -> %s\n", file->sym_link) : ft_printf("\n");
+	(file->first_right == 'l') ? ft_printf(" -> %s\n", file->sym_link) :
+	ft_printf("\n");
 	if (!file->next && data->opt->br)
 		ft_putchar('\n');
 }
 
-void 			print_l_mode(t_file *file, t_ls *data)
+void			print_l_mode(t_file *file, t_ls *data)
 {
 	t_file		*tmp;
 	static int	br;

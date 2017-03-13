@@ -30,7 +30,7 @@ char		*time_handler(t_file *file, t_opt *opt)
 	return (tmp);
 }
 
-int 		check_major(t_file *file)
+int			check_major(t_file *file)
 {
 	t_file	*tmp;
 

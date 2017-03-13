@@ -12,7 +12,7 @@
 
 #include "../includes/ft_ls.h"
 
-int 				parse(t_ls *ls, char *arg)
+int		parse(t_ls *ls, char *arg)
 {
 	if (arg && arg[0] == '-' && !parse_opt(ls, arg))
 		return (0);

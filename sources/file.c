@@ -28,6 +28,29 @@ void		add_file(t_file *new, t_file **begin)
 		*begin = new;
 }
 
+void		new_file_extend(struct stat *file_stat, t_file *new)
+{
+	if (S_ISCHR(new->right_nu) || S_ISBLK(new->right_nu))
+	{
+		new->major = major(file_stat->st_rdev);
+		new->minor = minor(file_stat->st_rdev);
+	}
+	else
+	{
+		new->major = 0;
+		new->minor = (int)file_stat->st_size;
+	}
+	new->inode_nu = file_stat->st_ino;
+	new->right_nu = file_stat->st_mode;
+	new->next = NULL;
+	new->prev = NULL;
+	(getgrgid(file_stat->st_gid)->gr_name) ?
+	(new->name_grp = getgrgid(file_stat->st_gid)->gr_name) :
+	(new->name_grp = ft_strdup(ft_itoa(file_stat->st_gid, 10)));
+	set_first_right(new, file_stat);
+	hard_link_handler(new);
+}
+
 t_file		*new_file(struct dirent *dir, struct stat *file_stat,
 	char *cur_path, t_ls *data)
 {
@@ -49,26 +72,8 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat,
 		(getpwuid(file_stat->st_uid)) ?
 		(new->name_usr = getpwuid(file_stat->st_uid)->pw_name) :
 		(new->name_usr = ft_strdup(ft_itoa(file_stat->st_uid, 10)));
-		(getgrgid(file_stat->st_gid)->gr_name) ?
-		(new->name_grp = getgrgid(file_stat->st_gid)->gr_name) :
-		(new->name_grp = ft_strdup(ft_itoa(file_stat->st_gid, 10)));
-		new->inode_nu = file_stat->st_ino;
-		new->right_nu = file_stat->st_mode;
-		new->next = NULL;
-		new->prev = NULL;
-		set_first_right(new, file_stat);
-		hard_link_handler(new);
 		(void)data;
-		if (S_ISCHR(new->right_nu) || S_ISBLK(new->right_nu))
-		{
-			new->major = major(file_stat->st_rdev);
-			new->minor = minor(file_stat->st_rdev);
-		}
-		else
-		{
-			new->major = 0;
-			new->minor = (int)file_stat->st_size;
-		}
+		new_file_extend(file_stat, new);
 		return (new);
 	}
 	else

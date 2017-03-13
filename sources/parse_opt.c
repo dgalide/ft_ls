@@ -30,7 +30,7 @@ static void			add_opt(t_ls *ls, char c)
 		ls->opt->sg = 1;
 }
 
-static int 			is_valid_opt(char c)
+static int			is_valid_opt(char c)
 {
 	if (c == 'l' || c == 'R' || c == 'r' || c == 'a' || c == 't' || c == 'T'
 		|| c == 'g')
@@ -39,18 +39,18 @@ static int 			is_valid_opt(char c)
 		return (0);
 }
 
-void					error_opt(void)
+void				error_opt(void)
 {
 	ft_printf("Error Invalid option\n");
 	ft_printf("usage: ./ft_ls [-lartRgT] [file ...]\n");
 	exit(3);
 }
 
-int 				parse_opt(t_ls *ls, char *str)
+int					parse_opt(t_ls *ls, char *str)
 {
-	t_opt		*tmp;
-	char		*tab;
-	int 		i;
+	t_opt			*tmp;
+	char			*tab;
+	int				i;
 
 	tab = NULL;
 	tmp = ls->opt;

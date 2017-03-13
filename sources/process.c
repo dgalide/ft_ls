@@ -12,9 +12,9 @@
 
 #include "../includes/ft_ls.h"
 
-void 		set_first_right(t_file *file, struct stat *file_stat)
+void			set_first_right(t_file *file, struct stat *file_stat)
 {
-	int val;
+	int		val;
 
 	val = file_stat->st_mode;
 	if (S_ISBLK(val))
@@ -35,18 +35,19 @@ void 		set_first_right(t_file *file, struct stat *file_stat)
 		file->first_right = '-';
 }
 
-void		set_byte_blocks(t_file **file, t_ls *data)
+void			set_byte_blocks(t_file **file, t_ls *data)
 {
-	t_file	*tmp;
-	int byte_blocks;
-	struct 	stat file_stat;
+	t_file		*tmp;
+	int			byte_blocks;
+	struct stat	file_stat;
 
 	byte_blocks = 0;
 	tmp = *file;
 	(void)data;
 	while (tmp)
 	{
-		if (!lstat(tmp->path, &file_stat) && (tmp->name[0] != '.' || (tmp->name[0] == '.' && data->opt->a)))
+		if (!lstat(tmp->path, &file_stat) && (tmp->name[0] != '.' ||
+			(tmp->name[0] == '.' && data->opt->a)))
 			byte_blocks += file_stat.st_blocks;
 		tmp = tmp->next;
 	}
@@ -58,28 +59,28 @@ void		set_byte_blocks(t_file **file, t_ls *data)
 	}
 }
 
-void		hard_link_handler(t_file *new)
+void			hard_link_handler(t_file *new)
 {
-	char tmp[258];
-	size_t len;
+	char	tmp[258];
+	size_t	len;
 
 	len = 258;
 	if (new->first_right == 'l')
 	{
 		len = readlink(new->path, tmp, len);
 		tmp[len] = '\0';
-		new->sym_link = ft_strdup(tmp);	
+		new->sym_link = ft_strdup(tmp);
 	}
 	else
 		new->sym_link = NULL;
 }
 
-void		read_dir(char *path, t_ls *data)
+void			read_dir(char *path, t_ls *data)
 {
-	DIR 	*fd;
-	struct 	dirent *dir;
-	struct 	stat file_stat;
-	t_file *file;
+	DIR				*fd;
+	struct dirent	*dir;
+	struct stat		file_stat;
+	t_file			*file;
 
 	fd = 0;
 	dir = NULL;
@@ -102,7 +103,7 @@ void		read_dir(char *path, t_ls *data)
 	}
 }
 
-void		ls_process(t_ls *data)
+void			ls_process(t_ls *data)
 {
 	t_arg	*arg;
 

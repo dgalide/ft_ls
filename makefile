@@ -15,7 +15,8 @@ SRC = 	sources/main.c 												\
 		sources/file.c 												\
 		sources/utils/utils0.c 										\
 		sources/utils/utils1.c 										\
-		sources/error.c 
+		sources/error.c 											\
+		sources/is_sort.c
 		
 OBJ = $(SRC:.c=.o)
 FLAG = -Wall -Werror -Wextra -g -fsanitize=address
