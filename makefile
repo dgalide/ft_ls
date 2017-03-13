@@ -19,7 +19,7 @@ SRC = 	sources/main.c 												\
 		sources/is_sort.c
 		
 OBJ = $(SRC:.c=.o)
-FLAG = -Wall -Werror -Wextra -g -fsanitize=address
+FLAG = -Wall -Werror -Wextra
 CG = \033[92m 
 CY =  \033[93m
 CE = \033[0m
