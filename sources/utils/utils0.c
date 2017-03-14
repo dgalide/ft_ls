@@ -23,11 +23,11 @@ int			is_current(char *name)
 		return (0);
 }
 
-void		find_dir(t_file **file, t_ls *data)
+void		find_dir(t_file *file, t_ls *data)
 {
 	t_file	*tmp;
 
-	tmp = *file;
+	tmp = file;
 	if (tmp)
 	{
 		while (tmp)

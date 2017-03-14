@@ -12,6 +12,19 @@
 
 #include "../includes/ft_ls.h"
 
+void	print_list(t_file *file)
+{
+	t_file *tmp;
+
+	tmp = file;
+	ft_putendl("\nprint_list");
+	while (tmp)
+	{
+		ft_putendl(tmp->name);
+		tmp = tmp->next;
+	}
+}
+
 void				sort_alpha(t_file **file)
 {
 	t_file			*tmp;
@@ -47,6 +60,7 @@ void				sort_alpha_rev(t_file **file)
 	{
 		while (!is_sort_alpha_rev((*file)))
 		{
+			print_list(*file);
 			if (!tmp || !tmp->next)
 				tmp = *file;
 			if (tmp && tmp->next && ft_strcmp(tmp->name, tmp->next->name) > 0)

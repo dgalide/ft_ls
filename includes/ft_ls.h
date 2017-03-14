@@ -90,6 +90,7 @@ void				print_right(t_file *file);
 t_file				*new_file(struct dirent *dir, struct stat *file_stat,
 	char *cur_path, t_ls *data);
 void				add_file(t_file *new, t_file **begin);
+void				read_dir(char *path, t_ls *data);
 void				set_first_right(t_file *file, struct stat *file_stat);
 int					check_colon(int value);
 int					is_parent_dir(char *file);
@@ -108,7 +109,7 @@ char				*recursive_read(t_ls *data, char *name, int stop);
 int					add_arg(t_ls *data, char *name);
 int					is_current_dir(char *name);
 void				read_dir(char *path, t_ls *data);
-void				find_dir(t_file **file, t_ls *data);
+void				find_dir(t_file *file, t_ls *data);
 char				*format_path(char *curr_path, char *name_file);
 void				print_manager(t_file *file, t_ls *data);
 int				is_sort_date(t_file *file, int direction);
@@ -128,5 +129,6 @@ void				swap(t_file *a, t_file *b);
 void				define_max_field(t_file **file, t_ls *data);
 int					is_current_dir(char *file);
 int					ft_check_cols(int tmp);
+void				print_list(t_file *file);
 
 #endif

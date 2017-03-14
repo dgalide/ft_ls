@@ -45,8 +45,8 @@ void		new_file_extend(struct stat *file_stat, t_file *new)
 	new->next = NULL;
 	new->prev = NULL;
 	(getgrgid(file_stat->st_gid)->gr_name) ?
-	(new->name_grp = getgrgid(file_stat->st_gid)->gr_name) :
-	(new->name_grp = ft_strdup(ft_itoa(file_stat->st_gid, 10)));
+	(new->name_grp = ft_strdup(getgrgid(file_stat->st_gid)->gr_name)) :
+	(new->name_grp = ft_itoa(file_stat->st_gid, 10));
 	set_first_right(new, file_stat);
 	hard_link_handler(new);
 }
@@ -70,8 +70,8 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat,
 		new->is_dir = (dir->d_type == 4) ? 1 : 0;
 		new->nb_hard_link = file_stat->st_nlink;
 		(getpwuid(file_stat->st_uid)) ?
-		(new->name_usr = getpwuid(file_stat->st_uid)->pw_name) :
-		(new->name_usr = ft_strdup(ft_itoa(file_stat->st_uid, 10)));
+		(new->name_usr = ft_strdup(getpwuid(file_stat->st_uid)->pw_name)) :
+		(new->name_usr = ft_itoa(file_stat->st_uid, 10));
 		(void)data;
 		new_file_extend(file_stat, new);
 		return (new);

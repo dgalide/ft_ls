@@ -75,34 +75,6 @@ void			hard_link_handler(t_file *new)
 		new->sym_link = NULL;
 }
 
-void			read_dir(char *path, t_ls *data)
-{
-	DIR				*fd;
-	struct dirent	*dir;
-	struct stat		file_stat;
-	t_file			*file;
-
-	fd = 0;
-	dir = NULL;
-	file = NULL;
-	if (path)
-	{
-		fd = opendir(path);
-		if (fd)
-		{
-			while ((dir = readdir(fd)))
-				if (lstat(format_path(path, dir->d_name), &file_stat) == 0)
-					add_file(new_file(dir, &file_stat, path, data), &file);
-			closedir(fd);
-			print_manager(file, data);
-			if (data->opt->br)
-				find_dir(&file, data);
-		}
-		else
-			error_handler(path, data, 0);
-	}
-}
-
 void			ls_process(t_ls *data)
 {
 	t_arg	*arg;

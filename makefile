@@ -16,7 +16,8 @@ SRC = 	sources/main.c 												\
 		sources/utils/utils0.c 										\
 		sources/utils/utils1.c 										\
 		sources/error.c 											\
-		sources/is_sort.c
+		sources/is_sort.c 											\
+		sources/readdir.c 											
 		
 OBJ = $(SRC:.c=.o)
 FLAG = -Wall -Werror -Wextra
