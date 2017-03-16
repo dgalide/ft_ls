@@ -67,7 +67,7 @@ t_file		*new_file(struct dirent *dir, struct stat *file_stat,
 		new->st_size = (int)file_stat->st_size;
 		new->mtime = ft_strdup(ctime(&(file_stat->st_mtime)));
 		new->time = file_stat->st_mtime;
-		new->is_dir = (dir->d_type == 4) ? 1 : 0;
+		new->is_dir = (S_ISDIR(file_stat->st_mode)) ? 1 : 0;
 		new->nb_hard_link = file_stat->st_nlink;
 		(getpwuid(file_stat->st_uid)) ?
 		(new->name_usr = ft_strdup(getpwuid(file_stat->st_uid)->pw_name)) :
