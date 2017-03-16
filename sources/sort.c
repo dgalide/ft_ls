@@ -60,7 +60,6 @@ void				sort_alpha_rev(t_file **file)
 	{
 		while (!is_sort_alpha_rev((*file)))
 		{
-			print_list(*file);
 			if (!tmp || !tmp->next)
 				tmp = *file;
 			if (tmp && tmp->next && ft_strcmp(tmp->name, tmp->next->name) > 0)

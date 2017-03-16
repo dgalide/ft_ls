@@ -25,9 +25,7 @@ static void		read_dir_extend(DIR *fd, t_file *file, t_ls *data, char *path)
 			error_handler(path, data, 0);
 	}
 	closedir(fd);
-	print_list(file);
-	print_manager(file, data);
-	print_list(file);
+	print_manager(&file, data);
 	if (data->opt->br)
 		find_dir(file, data);
 }
